@@ -96,9 +96,6 @@ public class Consumer {
         if (consumer.hasContract(consumer) && consumer.getContract().getLength() != 0) {
             consumer.getContract().setLength(consumer.getContract().getLength() - 1);
         }
-        if (consumer.getContract().getLength() == 0) {
-            consumer.setContract(null);
-        }
     }
 
     public int calcCurrentBudget(Consumer consumer) {
@@ -110,10 +107,11 @@ public class Consumer {
         }
     }
 
-    public void doRound(Consumer consumer) {
+    public void doUpdate(Consumer consumer, List<Distributor> distributorList) {
         consumer.reduceContractLength(consumer);
         if (consumer.getContract().getLength() == 0) {
-
+            consumer.setContract(null);
+            consumer.getBestContract(consumer, distributorList);
         }
     }
 

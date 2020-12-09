@@ -10,7 +10,7 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
         ObjectMapper objectMapper = new ObjectMapper();
-        Input input = objectMapper.readValue(new File("C:/Users/capla/Desktop/proiect-etapa1/checker/resources/in/basic_1.json"), Input.class);
+        Input input = objectMapper.readValue(new File("C:/Users/capla/Desktop/proiect-etapa1/checker/resources/in/basic_2.json"), Input.class);
         List<Consumer> consumerList = input.getInitialData().getConsumers();
         List<Distributor> distributorList = input.getInitialData().getDistributors();
         int numberOfTurns = input.getNumberOfTurns();
@@ -18,13 +18,15 @@ public class Main {
         Utils.setInitialDistributor(consumerList, distributorList);
         for (int i = 0; i < numberOfTurns; i++) {
             Distributor.updateDistributorList(distributorList, input.getMonthlyUpdates().get(i).getCostsChanges());
+            Utils.uploadNewConsumers(input.getMonthlyUpdates().get(i).getNewConsumers(), distributorList);
             for (Consumer consumer : consumerList) {
-                consumer.doRound(consumer);
+                consumer.doUpdate(consumer, distributorList);
             }
-            for (Consumer newConsumer: input.getMonthlyUpdates().get(i).getNewConsumers()) {
-                consumerList.add(newConsumer);
-                newConsumer.getBestContract(newConsumer, distributorList);
+//            consumerList.addAll(input.getMonthlyUpdates().get(i).getNewConsumers());
+            for (Distributor distributor : distributorList) {
+                distributor.calcContractPrice(distributor);
             }
+            System.out.println(distributorList);
         }
     }
 }

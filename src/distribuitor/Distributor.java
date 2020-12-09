@@ -96,6 +96,9 @@ public class Distributor {
                 ", initialBudget=" + initialBudget +
                 ", initialInfrastructureCost=" + initialInfrastructureCost +
                 ", initialProductionCost=" + initialProductionCost +
+                ", profit=" + profit +
+                ", updatedInfrastructureCost=" + updatedInfrastructureCost +
+                ", updatedProductionCost=" + updatedProductionCost +
                 '}';
     }
 
@@ -108,8 +111,12 @@ public class Distributor {
     }
 
     public long calcContractPrice(Distributor distributor) {
-        return Math.round(Math.floor(initialInfrastructureCost / contracts.size()) + initialProductionCost + profit);
+        return Math.round(Math.floor(updatedInfrastructureCost / contracts.size()) + updatedProductionCost + profit);
     }
+
+/*    public long updatePrices() {
+
+    }*/
 
     public static void updateDistributorList(List<Distributor> distributorList, List<CostsChanges> costsChangesList) {
         for (CostsChanges costsChanges : costsChangesList) {

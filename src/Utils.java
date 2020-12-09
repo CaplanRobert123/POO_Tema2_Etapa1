@@ -14,6 +14,12 @@ public class Utils {
         return Math.round(Math.floor(1.2*calcMonthlyPayment(consumer.getCurrentDistributor()))) + calcMonthlyPayment(consumer.getCurrentDistributor());
     }
 
+    public static void uploadNewConsumers(List<Consumer> newConsumers, List<Distributor> distributorList) {
+        for (Consumer newConsumer : newConsumers) {
+            newConsumer.getBestContract(newConsumer, distributorList);
+        }
+    }
+
     public static void setInitialDistributor(List<Consumer> consumerList, List<Distributor> distributorList) {
         long minContractPrice = Integer.MAX_VALUE;
         Distributor bestPriceDistributor = new Distributor();
